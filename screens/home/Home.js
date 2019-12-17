@@ -12,6 +12,6 @@ export default function Home(props) {
 const styles = StyleSheet.create({
     containner: {
         backgroundColor: "#BBEEB9",
-        height: 600,
+        height: 1000,
     }
 })
