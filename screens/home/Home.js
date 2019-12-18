@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import { StyleSheet, FlatList } from 'react-native';
 import { render } from 'react-dom';
 import HomeItem from '../../components/HomeListItem'
 
@@ -8,20 +8,24 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       categories: [
-        { id: 1, name: 'Giới thiệu'},
-        { id: 2, name: 'Hướng dẫn'},
-        { id: 3, name: 'Đóng góp ý kiến'}
+        { id: 1, name: 'Giới thiệu', pageName: 'Intro'},
+        { id: 2, name: 'Hướng dẫn', pageName: 'Tutorial'},
+        { id: 3, name: 'Đóng góp ý kiến', pageName: 'Comment'}
       ]
     };
   }
 
   render() {
+    const { navigation } = this.props;
     const { categories } = this.state;
     return (
       <FlatList
         data = {categories}
         renderItem = {({item}) =>
-          <HomeItem category={item} />}
+          <HomeItem 
+            category={item} 
+            onPress={() => navigation.navigate(item.pageName)}
+          />}
         keyExtractor = {item => `${item.id}`}
         contentContainerStyle = {styles.container}
       />
@@ -32,9 +36,8 @@ export default class Home extends React.Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#BBEEB9",
-    height: 1000,
-    //justifyContent: 'center',
-    paddingTop: 26,
+    height: 700,
+    paddingTop: 40,
     paddingLeft: 26,
     paddingRight: 26
   }

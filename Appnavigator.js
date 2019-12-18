@@ -11,6 +11,9 @@ const color = {
 
 /* import HomeStack Screens */
 import Home from './screens/home/Home'
+import Intro from './screens/home/Intro'
+import Tutorial from './screens/home/Tutorial'
+import Comment from './screens/home/Comment'
 
 /* import DiagnoticsStack Screens */
 import Animals from './screens/diagnotics/Animals'
@@ -22,7 +25,7 @@ import Store from './screens/store/Store'
 import Setting from './screens/settings/Settings'
 
 /*Create HomeStack */
-const HomeStack = createStackNavigator({Home})
+const HomeStack = createStackNavigator({Home, Intro, Tutorial, Comment})
 HomeStack.navigationOptions = {
     tabBarLabel: 'Trang chủ',
     tabBarIcon: ({focused}) => {

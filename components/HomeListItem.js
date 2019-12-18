@@ -2,9 +2,9 @@ import React from 'react'
 import {Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 
 export default function HomeItem(props) {
-    const {category} = props;
+    const {category, onPress} = props;
     return (
-        <TouchableOpacity activeOpacity={0.5} >
+        <TouchableOpacity activeOpacity={0.5} onPress={onPress} >
             <View style={styles.container}>
                 <Text style={styles.title}>{category.name}</Text>
             </View>
