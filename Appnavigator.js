@@ -9,14 +9,19 @@ const color = {
     INACTIVE: "#ccc"
 }
 
+/* import HomeStack Screens */
 import Home from './screens/home/Home'
 
+/* import DiagnoticsStack Screens */
 import Animals from './screens/diagnotics/Animals'
 
+/* import StoreStack Screens */
 import Store from './screens/store/Store'
 
+/* import SettingStack Screens */
 import Setting from './screens/settings/Settings'
 
+/*Create HomeStack */
 const HomeStack = createStackNavigator({Home})
 HomeStack.navigationOptions = {
     tabBarLabel: 'Trang chủ',
@@ -28,6 +33,7 @@ HomeStack.navigationOptions = {
     }
 }
 
+/*Create DiagnoticsStack */
 const DiagnoticsStack = createStackNavigator({Animals})
 DiagnoticsStack.navigationOptions = {
     tabBarLabel: 'Chẩn đoán',
@@ -39,6 +45,7 @@ DiagnoticsStack.navigationOptions = {
     }
 }
 
+/*Create StoreStack */
 const StoreStack = createStackNavigator({Store})
 StoreStack.navigationOptions = {
     tabBarLabel: 'Cửa hàng',
@@ -50,6 +57,7 @@ StoreStack.navigationOptions = {
     }
 }
 
+/* Create SettingStack */
 const SettingStack = createStackNavigator({Setting})
 SettingStack.navigationOptions = {
     tabBarLabel: 'Cài đặt',
