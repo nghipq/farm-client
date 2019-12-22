@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Button, TextInput } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Alert } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class Intro extends React.Component {
   constructor(props) {
@@ -25,8 +26,12 @@ export default class Intro extends React.Component {
           value={this.state.text}
           />
         </View>
-        <View style={styles.button}>
-          <Button title="Gửi"  />
+        <View style={styles.button} >
+          <TouchableOpacity onPress={() => {
+            Alert.alert('Cảm ơn bạn đã đóng góp ý kiến!');
+          }}>
+            <Text style={{color: 'white', fontSize: 20}}> Gửi </Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -37,7 +42,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#BBEEB9',
-    alignItems: 'stretch',
+    alignItems: 'center',
     justifyContent: 'center',
     paddingLeft: 16,
     paddingRight: 16,
@@ -46,15 +51,19 @@ const styles = StyleSheet.create({
   textbox: {
     backgroundColor: "#fff",
     borderColor: 'gray', 
+    width: 350,
     borderWidth: 1,
-    borderRadius: 18
+    borderRadius: 18,
+    alignItems: 'stretch'
   },
   button: {
-    marginLeft: 130,
-    marginRight: 130,
+    justifyContent: 'center',
     marginTop: 30,
-    // backgroundColor: '#FFFFFF',
-    // color: 'black',
-    borderRadius: 18
+    width: 100,
+    height: 50,
+    alignItems: 'center',
+    borderRadius: 18,
+    backgroundColor: '#5ea7b9',
+    
   }
 });
