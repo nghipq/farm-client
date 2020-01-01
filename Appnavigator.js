@@ -17,6 +17,7 @@ import Comment from './screens/home/Comment'
 
 /* import DiagnoticsStack Screens */
 import Animals from './screens/diagnotics/Animals'
+import Diagnotics from './screens/diagnotics/Diagnotics'
 
 /* import StoreStack Screens */
 import Store from './screens/store/Store'
@@ -37,7 +38,7 @@ HomeStack.navigationOptions = {
 }
 
 /*Create DiagnoticsStack */
-const DiagnoticsStack = createStackNavigator({Animals})
+const DiagnoticsStack = createStackNavigator({Animals, Diagnotics})
 DiagnoticsStack.navigationOptions = {
     tabBarLabel: 'Chẩn đoán',
     tabBarIcon: ({focused}) => {
