@@ -1,10 +1,25 @@
 import React from 'react'
-import {View, Text} from 'react-native'
+import {View, Button, StyleSheet, AsyncStorage} from 'react-native'
 
-export default function Setting(props) {
-    return(
-        <View>
-            <Text>Setting</Text>
-        </View>
-    )
+export default class Setting extends React.Component {
+        signOut = async () => {
+            AsyncStorage.clear()
+            this.props.navigation.navigate('AuthLoading')
+        }
+        
+        render() {
+            return (
+                <View style={styles.container}>
+                    <Button title="Sign Out" onPress={this.signOut} />
+                </View>
+            );
+        }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+});
