@@ -22,7 +22,8 @@ render(){
             {animals.map(animal => ( <AnimalButton key = {animal.id} animal={animal} 
                 onPress={() => navigation.navigate('Diagnotics', {
                     title: animal.title,
-                    id: animal.id
+                    id: animal.id,
+                    Imagesrc: ""
                 }) }
                 />))}
         

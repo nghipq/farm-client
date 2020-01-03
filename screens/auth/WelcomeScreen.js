@@ -20,20 +20,21 @@ class WelcomeScreen extends Component {
         };
     }
     onLogin() {
-        const { username, password } = this.state;
-        const item = {
-            username: username,
-            password: password
-        }
-        axios.post(`/login?email=${username}&password=${password}`).then(res => {
-            if(res.data.success) {
-                Alert.alert('Thành công', `Chào ${res.data.username}`);
-                this.props.navigation.navigate('App')
-            }
-            else {
-                Alert.alert(`${res.data.error}`);
-            }
-        })
+        // const { username, password } = this.state;
+        // const item = {
+        //     username: username,
+        //     password: password
+        // }
+        // axios.post(`/login?email=${username}&password=${password}`).then(res => {
+        //     if(res.data.success) {
+        //         Alert.alert('Thành công', `Chào ${res.data.username}`);
+        //         this.props.navigation.navigate('App')
+        //     }
+        //     else {
+        //         Alert.alert(`${res.data.error}`);
+        //     }
+        // })
+        this.props.navigation.navigate('App')
       }
     render() {
         return (
