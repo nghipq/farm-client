@@ -19,14 +19,6 @@ export default class Diagnotics extends React.Component {
         }
     }
 
-    componentDidUpdate() {
-        if(this.props.navigation.getParam("Imagesrc") != "") {
-            this.setState({
-                Imagesrc: this.props.navigation.getParam("Imagesrc")
-            })
-        }
-    }
-
     render() {
 
         return (
@@ -52,16 +44,9 @@ export default class Diagnotics extends React.Component {
                     <Button
                         title="Load Image"
                         style={{ backgroundColor: '#fff' }}
-                        // onPress={
-
-                        //     // () => {
-                        //     //     data = "b'" + this.props.navigation.getParam("Imagesrc")["base64"] + "'"
-                        //     //     console.log(data)
-                        //     //     Axios.post("/diaglogic?Imagesrc=${data}"+data).then(res => {
-                        //     //         console.log(res.data)
-                        //     //     }).catch(err => console.error(err));
-                        //     // }
-                        // }
+                        onPress={() => {
+                            console.log("click...")
+                        }}
                     /></View>
             </View>
         )

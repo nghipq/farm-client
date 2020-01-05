@@ -2,7 +2,6 @@ import React from 'react'
 import {View, Text, StyleSheet, Image } from 'react-native'
 import conga from '../../assets/conga.jpg'
 import AnimalButton from '../../components/AnimalButton'
-import Diagnotics from './Diagnotics';
 
 export default class Animals extends React.Component {
     constructor (props){
@@ -17,6 +16,7 @@ export default class Animals extends React.Component {
 render(){
     const { navigation } = this.props;
     const {animals} = this.state;
+    
     return(
         <View style={styles.container}>
             {animals.map(animal => ( <AnimalButton key = {animal.id} animal={animal} 
