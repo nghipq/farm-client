@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, FlatList } from 'react-native';
+import { StyleSheet, FlatList, AsyncStorage } from 'react-native';
 import { render } from 'react-dom';
 import HomeItem from '../../components/HomeListItem'
 

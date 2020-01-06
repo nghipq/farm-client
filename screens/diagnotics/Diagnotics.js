@@ -1,12 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Button, ScrollView, Image } from 'react-native';
-import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { StyleSheet, View, TouchableOpacity, Button, AsyncStorage} from 'react-native';
+import { FontAwesome} from '@expo/vector-icons';
 import CameraEx from './CameraEx';
-import Axios from 'axios';
 export default class Diagnotics extends React.Component {
     constructor(props) {
         super(props)
+
+        this.state = {
+            Imagesrc: "", 
+            lng: null, 
+            lat: null
+        }
     }
 
     static navigationOptions = ({ navigation }) => {
@@ -14,7 +18,12 @@ export default class Diagnotics extends React.Component {
             title: navigation.getParam('title')
         }
     }
-
+componentDidMount (){
+    this.setState({
+        lng: this.props.navigation.getParam("lng"),
+        lat: this.props.navigation.getParam("lat")
+    })
+}
     render() {
         return (
             <View style={styles.container}>
@@ -55,6 +64,8 @@ export default class Diagnotics extends React.Component {
                                 body: body
                             }).then(res => res.json())
                             .then(res => console.log(res))
+                            console.log(this.state.lng, this.state.lat)
+
                         }}
                     /></View>
             </View>
