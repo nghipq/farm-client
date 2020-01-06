@@ -9,7 +9,9 @@ export default class Diagnotics extends React.Component {
         super(props)
 
         this.state = {
-            Imagesrc: ""
+            Imagesrc: "", 
+            lng: null, 
+            lat: null
         }
     }
 
@@ -18,9 +20,14 @@ export default class Diagnotics extends React.Component {
             title: navigation.getParam('title')
         }
     }
-
+componentDidMount (){
+    this.setState({
+        lng: this.props.navigation.getParam("lng"),
+        lat: this.props.navigation.getParam("lat")
+    })
+    
+}
     render() {
-
         return (
             <View style={styles.container}>
                 <TouchableOpacity style={{
@@ -45,7 +52,7 @@ export default class Diagnotics extends React.Component {
                         title="Load Image"
                         style={{ backgroundColor: '#fff' }}
                         onPress={() => {
-                            console.log("click...")
+                            console.log(this.state.lng, this.state.lat)
                         }}
                     /></View>
             </View>
