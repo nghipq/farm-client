@@ -7,10 +7,6 @@ import Axios from 'axios';
 export default class Diagnotics extends React.Component {
     constructor(props) {
         super(props)
-
-        this.state = {
-            Imagesrc: ""
-        }
     }
 
     static navigationOptions = ({ navigation }) => {
@@ -20,7 +16,6 @@ export default class Diagnotics extends React.Component {
     }
 
     render() {
-
         return (
             <View style={styles.container}>
                 <TouchableOpacity style={{
@@ -30,7 +25,6 @@ export default class Diagnotics extends React.Component {
                     onPress={() => this.props.navigation.navigate('CameraEx')
                     }
                 >
-                    {this.state.Imagesrc != "" && <Image source={{uri: this.state.Imagesrc}}/>}
                     <View>
                     </View>
 
@@ -45,7 +39,22 @@ export default class Diagnotics extends React.Component {
                         title="Load Image"
                         style={{ backgroundColor: '#fff' }}
                         onPress={() => {
-                            console.log("click...")
+                            var item = {
+                                uri: this.props.navigation.getParam("Imagesrc"),
+                                type: 'image/jpeg',
+                                name: this.props.navigation.getParam("Name")
+                            }
+                            
+                            var body = new FormData()
+                            body.append('authToken', 'secret');
+                            body.append('photo', item);
+                            body.append('title', 'A beautiful photo!');
+
+                            fetch('https://bb8b1dfd.ngrok.io/diaglogic', {
+                                method: 'POST',
+                                body: body
+                            }).then(res => res.json())
+                            .then(res => console.log(res))
                         }}
                     /></View>
             </View>

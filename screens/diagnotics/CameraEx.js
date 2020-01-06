@@ -1,13 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Camera } from 'expo-camera';
-import CameraRoll from "@react-native-community/cameraroll";
+import * as FileSystem from 'expo-file-system'
+
+const checkAndCreateFolder = async folder_path => {
+    const folder_info = await FileSystem.getInfoAsync(folder_path);
+    if (!Boolean(folder_info.exists)) {
+        // Create folder
+        try {
+            await FileSystem.makeDirectoryAsync(folder_path, {
+                intermediates: true
+            });
+        } catch (error) {
+            // Report folder creation error, include the folder existence before and now
+            const new_folder_info = await FileSystem.getInfoAsync(folder_path);
+            const debug = `checkAndCreateFolder: ${
+                error.message
+                } old:${JSON.stringify(folder_info)} new:${JSON.stringify(
+                    new_folder_info
+                )}`;
+            console.log(debug);
+            Sentry.captureException(new Error(debug));
+        }
+    }
+};
+
+checkAndCreateFolder(FileSystem.documentDirectory + 'DCD/')
 
 export default function CameraEx(props) {
     const [hasPermission, setHasPermission] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
-    
+
     useEffect(() => {
         (async () => {
             const { status } = await Camera.requestPermissionsAsync();
@@ -42,40 +66,31 @@ export default function CameraEx(props) {
                             justifyContent: 'center'
                         }}
                         onPress={() => {
-                            
+
                             const options = {
-                                
                                 quality: 1, base64: false, fixOrientation: true,
                                 exif: true,
                             };
 
                             this.camera.takePictureAsync(options).then((photo) => {
                                 photo.exif.Orientation = 1;
-                                var name = photo["uri"].slice(photo["uri"].indexOf('Camera') + 7, photo["uri"].length)
-                                
-                                var item = {
-                                    uri: photo["uri"],
-                                    type: 'image/jpeg',
-                                    name: name
-                                }
+                                const name = Date.now() + '.jpg'
+                                const uri = FileSystem.documentDirectory + 'DCD/' + name
+                                FileSystem.moveAsync({
+                                    from: photo["uri"],
+                                    to: uri
+                                })
 
-                                var body = new FormData()
-                                body.append('authToken', 'secret');
-                                body.append('photo', item);
-                                body.append('title', 'A beautiful photo!');
-
-                                fetch('https://62115734.ngrok.io/diaglogic', {
-                                    method: 'POST',
-                                    body: body
-                                }).then(res => res.json())
-                                .then(res => console.log(res))
-                                
-                            });
-
+                                console.log('The image is save to ' + uri);
+                                props.navigation.navigate('Diagnotics', {
+                                    Imagesrc: uri,
+                                    Name: name
+                                })
+                            })
                         }}>
-                     <MaterialCommunityIcons name="circle-outline"   // This is the icon which should take and save image
-                  style={{ color: 'white', fontSize: 100 }}
-                ></MaterialCommunityIcons>
+
+                        <MaterialCommunityIcons name="circle-outline" style={{ color: 'white', fontSize: 100 }}>
+                        </MaterialCommunityIcons>
                     </TouchableOpacity>
                 </View>
             </Camera>
