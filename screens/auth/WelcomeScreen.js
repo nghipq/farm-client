@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { AsyncStorage } from 'react-native'
 import axios from 'axios';
 import {
     View,
@@ -20,21 +21,21 @@ class WelcomeScreen extends Component {
         };
     }
     onLogin() {
-        // const { username, password } = this.state;
-        // const item = {
-        //     username: username,
-        //     password: password
-        // }
-        // axios.post(`/login?email=${username}&password=${password}`).then(res => {
-        //     if(res.data.success) {
-        //         Alert.alert('Thành công', `Chào ${res.data.username}`);
-        //         this.props.navigation.navigate('App')
-        //     }
-        //     else {
-        //         Alert.alert(`${res.data.error}`);
-        //     }
-        // })
-        this.props.navigation.navigate('App')
+        const { username, password } = this.state;
+        const item = {
+            username: username,
+            password: password
+        }
+        axios.post(`/login?email=${username}&password=${password}`).then(res => {
+            if(res.data.success) {
+                Alert.alert('Thành công', `Chào ${res.data.username}`);
+                AsyncStorage.setItem('id', JSON.stringify(res.data.id));
+                this.props.navigation.navigate('App')
+            }
+            else {
+                Alert.alert(`${res.data.error}`);
+            }
+        })
       }
     render() {
         return (

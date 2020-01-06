@@ -1,9 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Button, ScrollView, Image } from 'react-native';
-import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { StyleSheet, View, TouchableOpacity, Button, AsyncStorage} from 'react-native';
+import { FontAwesome} from '@expo/vector-icons';
 import CameraEx from './CameraEx';
-import Axios from 'axios';
 export default class Diagnotics extends React.Component {
     constructor(props) {
         super(props)
@@ -25,7 +23,6 @@ componentDidMount (){
         lng: this.props.navigation.getParam("lng"),
         lat: this.props.navigation.getParam("lat")
     })
-    
 }
     render() {
         return (
@@ -37,7 +34,6 @@ componentDidMount (){
                     onPress={() => this.props.navigation.navigate('CameraEx')
                     }
                 >
-                    {this.state.Imagesrc != "" && <Image source={{uri: this.state.Imagesrc}}/>}
                     <View>
                     </View>
 
@@ -52,7 +48,24 @@ componentDidMount (){
                         title="Load Image"
                         style={{ backgroundColor: '#fff' }}
                         onPress={() => {
+                            var item = {
+                                uri: this.props.navigation.getParam("Imagesrc"),
+                                type: 'image/jpeg',
+                                name: this.props.navigation.getParam("Name")
+                            }
+                            
+                            var body = new FormData()
+                            body.append('authToken', 'secret');
+                            body.append('photo', item);
+                            body.append('title', 'A beautiful photo!');
+
+                            fetch('https://bb8b1dfd.ngrok.io/diaglogic', {
+                                method: 'POST',
+                                body: body
+                            }).then(res => res.json())
+                            .then(res => console.log(res))
                             console.log(this.state.lng, this.state.lat)
+
                         }}
                     /></View>
             </View>
