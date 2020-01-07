@@ -50,7 +50,7 @@ class SignUpScreen extends Component {
             Alert.alert('Mật khẩu không được bỏ trống!');
         }
         else{
-        axios.post(`/register?email=${email}&password=${password}&username=${username}&address=${address}&confirm_password=${enter}`).then(res => {
+        axios.post(`/register?email=${email}&password=${password}&username=${username}&address=${address}&confirm_password=${enter}&phonenumber=${phone}`).then(res => {
             if(res.data.success) {
                 Alert.alert('Bạn đã đăng ký thành công. Vui lòng đăng nhập!');
                 this.props.navigation.navigate('Welcome')

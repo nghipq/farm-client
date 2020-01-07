@@ -7,7 +7,7 @@ export default class Diagnotics extends React.Component {
         super(props)
 
         this.state = {
-            Imagesrc: "", 
+            userId: null, 
             lng: null, 
             lat: null
         }
@@ -18,12 +18,17 @@ export default class Diagnotics extends React.Component {
             title: navigation.getParam('title')
         }
     }
-componentDidMount (){
-    this.setState({
-        lng: this.props.navigation.getParam("lng"),
-        lat: this.props.navigation.getParam("lat")
-    })
-}
+
+    componentDidMount (){
+        AsyncStorage.getItem("id").then(res => {
+            this.setState({
+                userId: res,
+                lng: this.props.navigation.getParam("lng"),
+                lat: this.props.navigation.getParam("lat")
+            })
+        })
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -48,24 +53,25 @@ componentDidMount (){
                         title="Load Image"
                         style={{ backgroundColor: '#fff' }}
                         onPress={() => {
+                            console.log(this.state.lng, this.state.lat, this.state.userId)
+
                             var item = {
                                 uri: this.props.navigation.getParam("Imagesrc"),
                                 type: 'image/jpeg',
                                 name: this.props.navigation.getParam("Name")
                             }
-                            
-                            var body = new FormData()
-                            body.append('authToken', 'secret');
-                            body.append('photo', item);
-                            body.append('title', 'A beautiful photo!');
 
-                            fetch('https://bb8b1dfd.ngrok.io/diaglogic', {
+                            var body = new FormData()
+                            body.append('userId', this.state.userId);
+                            body.append('photo', item);
+                            body.append('lng', this.state.lng);
+                            body.append('lat', this.state.lat);
+
+                            fetch('https://c4290d2f.ngrok.io/diaglogic', {
                                 method: 'POST',
                                 body: body
                             }).then(res => res.json())
                             .then(res => console.log(res))
-                            console.log(this.state.lng, this.state.lat)
-
                         }}
                     /></View>
             </View>
