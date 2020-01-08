@@ -21,11 +21,11 @@ class WelcomeScreen extends Component {
         };
     }
     onLogin() {
-        // const { username, password } = this.state;
-        // const item = {
-        //     username: username,
-        //     password: password
-        // }
+        const { username, password } = this.state;
+        const item = {
+            username: username,
+            password: password
+        }
         // axios.post(`/login?email=${username}&password=${password}`).then(res => {
         //     if(res.data.success) {
         //         Alert.alert('Thành công', `Chào ${res.data.username}`);

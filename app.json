@@ -12,6 +12,9 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "facebookScheme": "fb853519481774732",
+    "facebookAppId": "853519481774732",
+    "facebookDisplayName": "DCD (Detect chicken disease)",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
