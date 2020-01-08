@@ -36,7 +36,6 @@ class WelcomeScreen extends Component {
         //         Alert.alert(`${res.data.error}`);
         //     }
         // })
-
         this.props.navigation.navigate('App')
       }
     render() {
