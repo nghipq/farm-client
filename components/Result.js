@@ -1,17 +1,16 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity,ScrollView} from 'react-native'
 
 export default function Result(props) {
     const { info } = props
 
     return (
-        <View>
+        <ScrollView>
             <Text style={styles.title}>Tên bệnh:</Text>
             <Text>{info.sickness}</Text>
-            <Text></Text>
             <Text style={styles.title}>Cách xử lý:</Text>
             <Text>{info.solution}</Text>
-        </View>
+        </ScrollView>
     )
 }
 

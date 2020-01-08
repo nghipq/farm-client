@@ -16,7 +16,9 @@ export default class Diagnotics extends React.Component {
             modalVisible: false,
             solution: null,
             sickness: null,
-            phonenumber: null
+            phonenumber: null,
+            msg: null,
+            link: 'https://5645dd87.ngrok.io'
         }
     }
     onClose = () => this.setState({ modalVisible: false });
@@ -54,18 +56,25 @@ export default class Diagnotics extends React.Component {
         body.append('lng', this.state.lng);
         body.append('lat', this.state.lat);
 
-        fetch('https://d7745a60.ngrok.io/diaglogic', {
+        fetch(`${this.state.link}/diaglogic`, {
             method: 'POST',
             body: body,
 
         }).then(res => res.json())
             .then(res => {
-                const solution = res.solution
-                const newSolution = solution.split("\\n")
-                this.setState({
-                    sickness: res.sickness,
-                    solution: newSolution.join("\n"),
-                })
+                console.log(res)
+                if(res.success) {
+                    const solution = res.solution
+                    const newSolution = solution.split("\\n")
+                    this.setState({
+                        sickness: res.sickness,
+                        solution: newSolution.join("\n"),
+                    })
+                } else {
+                    this.setState({
+                        msg: res.mgs
+                    })
+                }
             })
     }
 
@@ -78,7 +87,13 @@ export default class Diagnotics extends React.Component {
                     alignItems: 'center', paddingTop: 100, paddingBottom: 100
                     , backgroundColor: '#fff', borderRadius: 10, width: 250
                 }}
-                    onPress={() => this.props.navigation.navigate('CameraEx')}>
+                    onPress={() => {
+                        this.setState({
+                            sickness: null,
+                            msg: null
+                        })
+                        this.props.navigation.navigate('CameraEx')
+                        }}>
 
                     <FontAwesome
                         name="camera"
@@ -92,6 +107,10 @@ export default class Diagnotics extends React.Component {
                         title="Chọn ảnh"
                         backgroundColor="#fff"
                         onPress={async () => {
+                            this.setState({
+                                msg: null,
+                                sickness: null
+                            })
                             const result = await ImagePicker.launchImageLibraryAsync({
                                 mediaTypes: ImagePicker.MediaTypeOptions.All,
                                 allowsEditing: true,
@@ -99,7 +118,7 @@ export default class Diagnotics extends React.Component {
                                 quality: 1
                             })
 
-                            name = result.uri.split("ImagePicker/")[1]
+                            var name = result.uri.split("ImagePicker/")[1]
 
                             this.setState({
                                 modalVisible: true
@@ -117,18 +136,25 @@ export default class Diagnotics extends React.Component {
                             body.append('lng', this.state.lng);
                             body.append('lat', this.state.lat);
 
-                            fetch('https://d7745a60.ngrok.io/diaglogic', {
+                            fetch(`${this.state.link}/diaglogic`, {
                                 method: 'POST',
                                 body: body,
 
                             }).then(res => res.json())
                                 .then(res => {
-                                    const solution = res.solution
-                                    const newSolution = solution.split("\\n")
-                                    this.setState({
-                                        sickness: res.sickness,
-                                        solution: newSolution.join("\n"),
-                                    })
+                                    console.log(res)
+                                    if(res.success) {
+                                        const solution = res.solution
+                                        const newSolution = solution.split("\\n")
+                                        this.setState({
+                                            sickness: res.sickness,
+                                            solution: newSolution.join("\n"),
+                                        })
+                                    } else {
+                                        this.setState({
+                                            msg: res.mgs
+                                        })
+                                    }
                                 })
                         }} />
                     <Button
@@ -151,7 +177,8 @@ export default class Diagnotics extends React.Component {
                             this.state.sickness ? <Result info={{
                                 sickness: this.state.sickness,
                                 solution: this.state.solution
-                            }} /> : <Text>Xin chờ trong giây lát...</Text>
+                            }} /> : this.state.msg ? <Text style={styles.text}>{this.state.msg}</Text> 
+                            : <Text>Xin chờ trong giây lát...</Text>
 
                         }
 
@@ -171,5 +198,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#BBEEB9',
+    },
+    text: {
+        textAlign: 'center'
     }
 })
