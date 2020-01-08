@@ -67,7 +67,7 @@ export default class Diagnotics extends React.Component {
                             body.append('lng', this.state.lng);
                             body.append('lat', this.state.lat);
 
-                            fetch('https://c4290d2f.ngrok.io/diaglogic', {
+                            fetch('https://a53a199c.ngrok.io/diaglogic', {
                                 method: 'POST',
                                 body: body
                             }).then(res => res.json())
