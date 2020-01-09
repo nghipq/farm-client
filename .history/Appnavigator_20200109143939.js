@@ -111,7 +111,8 @@ const AppStackNavigator = createStackNavigator({
 
         navigationOptions:
      {
-         header: null
+         header: null,
+         headerMode: 'none'
      }   
     
     }
