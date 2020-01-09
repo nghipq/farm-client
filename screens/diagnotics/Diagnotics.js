@@ -15,8 +15,11 @@ export default class Diagnotics extends React.Component {
             lat: null,
             modalVisible: false,
             solution: null,
-            
-            link: 'https://96e7d655.ngrok.io'
+            link: 'https://96e7d655.ngrok.io',
+            sickness: null,
+            solution: null,
+            phoneNumber: null,
+            msg: null,
         }
     }
     onClose = () => this.setState({ modalVisible: false });
@@ -65,7 +68,9 @@ export default class Diagnotics extends React.Component {
                     const solution = res.solution
                     const newSolution = solution.split("\\n")
                     this.setState({
-                        res: res
+                        sickness: res.sickness,
+                        solution: newSolution,
+                        phoneNumber:res.Department
                     })
                 } else {
                     this.setState({
@@ -145,7 +150,9 @@ export default class Diagnotics extends React.Component {
                                         const solution = res.solution
                                         const newSolution = solution.split("\\n")
                                         this.setState({
-                                            res: res
+                                            solution: newSolution,
+                                            sickness: res.sickness,
+                                            phoneNumber: res.Department
                                         })
                                     } else {
                                         this.setState({
@@ -171,7 +178,7 @@ export default class Diagnotics extends React.Component {
 
                         }} style={{ color: '#c1c1c1', marginLeft: 'auto', fontSize: 32, marginTop: 0 }} >x</Text>
                         {
-                            this.state.res ? <Result info={res} /> 
+                            this.state.sickness ? <Result info={{sickeness:this.state.sickness, solution: this.state.solution, phoneNumber: this.state.phoneNumber}} /> 
                             : this.state.msg ? <Text style={styles.text}>{this.state.msg}</Text> 
                             : <Text>Xin chờ trong giây lát...</Text>
                         }
