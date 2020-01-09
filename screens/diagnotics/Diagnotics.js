@@ -14,8 +14,9 @@ export default class Diagnotics extends React.Component {
             lng: null,
             lat: null,
             modalVisible: false,
-            msg: null,
-            link: 'https://f72f264f.ngrok.io'
+            solution: null,
+            
+            link: 'https://96e7d655.ngrok.io'
         }
     }
     onClose = () => this.setState({ modalVisible: false });
@@ -132,7 +133,7 @@ export default class Diagnotics extends React.Component {
                             body.append('lng', this.state.lng);
                             body.append('lat', this.state.lat);
 
-                            fetch('https://b43bbeb3.ngrok.io/diaglogic', {
+
                             fetch(`${this.state.link}/diaglogic`, {
                                 method: 'POST',
                                 body: body,
