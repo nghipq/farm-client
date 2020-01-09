@@ -94,8 +94,7 @@ SettingStack.navigationOptions = {
             size={28}
             color={focused ? color.ACTIVE : color.INACTIVE}
         />
-    },
-    
+    }
 }
 
 const AppTabNavigator = createBottomTabNavigator({
@@ -108,16 +107,21 @@ const AppTabNavigator = createBottomTabNavigator({
 const AppStackNavigator = createStackNavigator({
     AppTabNavigator: {
         screen: AppTabNavigator,
-
-        navigationOptions:
-     {
-         header: null
-     }   
-    
+        header: null,
+        navigationOptions: ({ navigation }) => ({
+            title: 'Your App',
+            headerLeft: (
+                <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+                    <View style={{ paddingHorizontal: 10 }}>
+                        <IoIcon name="md-menu" size={24} />
+                    </View>
+                </TouchableOpacity>
+            )
+        })
     }
 })
 
-AppTabNavigator.navigationOptions = ({ navigation}) => {
+AppTabNavigator.navigationOptions = ({ navigation }) => {
     
     let { routeName } = navigation.state.routes[navigation.state.index];
 

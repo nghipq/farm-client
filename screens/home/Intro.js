@@ -13,13 +13,11 @@ export default class Intro extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image style={styles.logo} source={logo}/>
-        
+        <Image style={styles.logo} source={logo}/>     
         <Text style={styles.text}>* Là phần mềm có chức năng nhận diện bệnh gà qua hình ảnh mà người dùng cung cấp và đưa ra những biện pháp xử lí để kịp thời ngăn chặn bệnh lây lan. </Text>
         <View>
         <Image  style={styles.icon} source={icon}/>
         </View>
-       <Text style={styles.text}>* Là phần mềm sẽ kết nối với các đại lí phân phối các sản phẩm chăn nuôi như thuốc chữa trị, thức ăn và các cơ sở thú y cho người chăn nuôi.</Text>  
       </View>
     );
   }

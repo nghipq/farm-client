@@ -44,13 +44,11 @@ import Setting from './screens/settings/Settings'
 const AuthStackNavigator = createStackNavigator({
     Welcome: WelcomeScreen,
     SignIn: SignInScreen,
-    SignUp: SignUpScreen,
-    
+    SignUp: SignUpScreen
 })
 
 /*Create HomeStack */
 const HomeStack = createStackNavigator({ Home, Intro, Tutorial, Comment })
-
 HomeStack.navigationOptions = {
     tabBarLabel: 'Trang chủ',
     tabBarIcon: ({ focused }) => {
@@ -94,8 +92,7 @@ SettingStack.navigationOptions = {
             size={28}
             color={focused ? color.ACTIVE : color.INACTIVE}
         />
-    },
-    
+    }
 }
 
 const AppTabNavigator = createBottomTabNavigator({
@@ -108,17 +105,20 @@ const AppTabNavigator = createBottomTabNavigator({
 const AppStackNavigator = createStackNavigator({
     AppTabNavigator: {
         screen: AppTabNavigator,
-
-        navigationOptions:
-     {
-         header: null
-     }   
-    
+        navigationOptions: ({ navigation }) => ({
+            title: 'Your App',
+            headerLeft: (
+                <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+                    <View style={{ paddingHorizontal: 10 }}>
+                        <IoIcon name="md-menu" size={24} />
+                    </View>
+                </TouchableOpacity>
+            )
+        })
     }
 })
 
-AppTabNavigator.navigationOptions = ({ navigation}) => {
-    
+AppTabNavigator.navigationOptions = ({ navigation }) => {
     let { routeName } = navigation.state.routes[navigation.state.index];
 
     // You can do whatever you like here to pick the title based on the route name

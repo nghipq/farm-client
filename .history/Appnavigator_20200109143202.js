@@ -107,11 +107,11 @@ const AppTabNavigator = createBottomTabNavigator({
 
 const AppStackNavigator = createStackNavigator({
     AppTabNavigator: {
-        screen: AppTabNavigator,
+      //  screen: AppTabNavigator,
 
         navigationOptions:
      {
-         header: null
+         header: null,
      }   
     
     }
