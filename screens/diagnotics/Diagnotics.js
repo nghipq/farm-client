@@ -15,7 +15,7 @@ export default class Diagnotics extends React.Component {
             lat: null,
             modalVisible: false,
             solution: null,
-            link: 'https://96e7d655.ngrok.io',
+            link: 'https://e0e8a339.ngrok.io',
             sickness: null,
             solution: null,
             phoneNumber: null,
@@ -42,7 +42,7 @@ export default class Diagnotics extends React.Component {
 
     sendImage() {
         this.setState({
-            modalVisible: true
+            modalVisible: true,
         })
 
         var item = {
@@ -63,7 +63,6 @@ export default class Diagnotics extends React.Component {
 
         }).then(res => res.json())
             .then(res => {
-                console.log(res)
                 if(res.success) {
                     const solution = res.solution
                     const newSolution = solution.split("\\n")
@@ -83,15 +82,13 @@ export default class Diagnotics extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-
-
                 <TouchableOpacity style={{
                     alignItems: 'center', paddingTop: 100, paddingBottom: 100
                     , backgroundColor: '#fff', borderRadius: 10, width: 250
                 }}
                     onPress={() => {
                         this.setState({
-                            res: null,
+                            sickness: null,
                             msg: null
                         })
                         this.props.navigation.navigate('CameraEx')
@@ -111,7 +108,7 @@ export default class Diagnotics extends React.Component {
                         onPress={async () => {
                             this.setState({
                                 msg: null,
-                                res: null,
+                                sickness: null,
                             })
                             const result = await ImagePicker.launchImageLibraryAsync({
                                 mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -175,7 +172,6 @@ export default class Diagnotics extends React.Component {
                             this.setState({
                                 modalVisible: false
                             })
-
                         }} style={{ color: '#c1c1c1', marginLeft: 'auto', fontSize: 32, marginTop: 0 }} >x</Text>
                         {
                             this.state.sickness ? <Result info={{sickeness:this.state.sickness, solution: this.state.solution, phoneNumber: this.state.phoneNumber}} /> 

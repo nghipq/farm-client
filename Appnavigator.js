@@ -113,13 +113,8 @@ const AppStackNavigator = createStackNavigator({
      {
          header: null
      }   
-    
     }
 })
-
-AppStackNavigator.navigationOptions = ({navigation}) => {
-    
-}
 
 AppTabNavigator.navigationOptions = ({ navigation }) => {
     let { routeName } = navigation.state.routes[navigation.state.index];

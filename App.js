@@ -5,9 +5,10 @@ import AppNavigator from './Appnavigator'
 
 const AppContainer = createAppContainer(AppNavigator)
 
-axios.defaults.baseURL='https://96e7d655.ngrok.io'
+axios.defaults.baseURL='https://e0e8a339.ngrok.io'
 
 export default function Features(props) {
+  console.ignoredYellowBox = ['Warning: Each'];
   return (
       <AppContainer />
   );
