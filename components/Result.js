@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity,ScrollView, Button} from 'react-native'
+import * as Facebook from 'expo-facebook';
 
 async function logIn() {
     try {
