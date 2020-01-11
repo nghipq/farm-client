@@ -15,7 +15,7 @@ export default class Diagnotics extends React.Component {
             lat: null,
             modalVisible: false,
             solution: null,
-            link: 'https://2b108f47.ngrok.io',
+            link: 'https://940e1f07.ngrok.io',
             sickness: null,
             solution: null,
             phoneNumber: null,
