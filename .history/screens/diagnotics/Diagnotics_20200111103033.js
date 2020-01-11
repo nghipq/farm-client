@@ -104,9 +104,8 @@ export default class Diagnotics extends React.Component {
                 </TouchableOpacity>
                 <View style={{ marginTop: 20, borderRadius: 10, width: 200 }}>
                     <TouchableOpacity
-                    activeOpacity= {0.8}
                     onPress={async () => {
-                        
+                        activeOpacity= {0.8}
                         this.setState({
                             msg: null,
                             sickness: null,
