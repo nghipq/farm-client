@@ -64,13 +64,13 @@ export default class Diagnotics extends React.Component {
 
         }).then(res => res.json())
             .then(res => {
-                if (res.success) {
+                if(res.success) {
                     const solution = res.solution
                     const newSolution = solution.split("\\n")
                     this.setState({
                         sickness: res.sickness,
                         solution: newSolution,
-                        phoneNumber: res.Department
+                        phoneNumber:res.Department
                     })
                 } else {
                     this.setState({
@@ -93,7 +93,7 @@ export default class Diagnotics extends React.Component {
                             msg: null
                         })
                         this.props.navigation.navigate('CameraEx')
-                    }}>
+                        }}>
 
                     <FontAwesome
                         name="camera"
@@ -102,85 +102,85 @@ export default class Diagnotics extends React.Component {
                     <CameraEx />
 
                 </TouchableOpacity>
-                <View style={{ marginTop: 20, borderRadius: 10, width: 200 }}>
-                   
-                        <Text
+                <View style={{  marginTop: 20, borderRadius: 10, width: 200 }}>
+                    <Text 
+                       
+                       style={styles.gui}
+                        onPress={async () => {
+                            this.setState({
+                                msg: null,
+                                sickness: null,
+                            })
+                            const result = await ImagePicker.launchImageLibraryAsync({
+                                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                                allowsEditing: true,
+                                aspect: [4, 3],
+                                quality: 1
+                            })
 
-                            style={styles.gui}
-                            onPress={async () => {
-                                
-                                this.setState({
-                                    msg: null,
-                                    sickness: null,
+                            var name = result.uri.split("ImagePicker/")[1]
+
+                            this.setState({
+                                modalVisible: true
+                            })
+
+                            var item = {
+                                uri: result.uri,
+                                type: 'image/jpeg',
+                                name: name
+                            }
+
+                            var body = new FormData()
+                            body.append('userId', this.state.userId);
+                            body.append('photo', item);
+                            body.append('lng', this.state.lng);
+                            body.append('lat', this.state.lat);
+
+
+                            fetch(`${this.state.link}/diaglogic`, {
+                                method: 'POST',
+                                body: body,
+
+                            }).then(res => res.json())
+                                .then(res => {
+                                  //  console.log(res)
+                                    if(res.success) {
+                                        const solution = res.solution
+                                        const newSolution = solution.split("\\n")
+                                        this.setState({
+                                            solution: newSolution,
+                                            sickness: res.sickness,
+                                            phoneNumber: res.Department
+                                        })
+                                    } else {
+                                        this.setState({
+                                            msg: res.mgs
+                                        })
+                                    }
                                 })
-                                const result = await ImagePicker.launchImageLibraryAsync({
-                                    mediaTypes: ImagePicker.MediaTypeOptions.All,
-                                    allowsEditing: true,
-                                    aspect: [4, 3],
-                                    quality: 1
-                                })
-
-                                var name = result.uri.split("ImagePicker/")[1]
-
-                                this.setState({
-                                    modalVisible: true
-                                })
-
-                                var item = {
-                                    uri: result.uri,
-                                    type: 'image/jpeg',
-                                    name: name
-                                }
-
-                                var body = new FormData()
-                                body.append('userId', this.state.userId);
-                                body.append('photo', item);
-                                body.append('lng', this.state.lng);
-                                body.append('lat', this.state.lat);
-
-
-                                fetch(`${this.state.link}/diaglogic`, {
-                                    method: 'POST',
-                                    body: body,
-
-                                }).then(res => res.json())
-                                    .then(res => {
-                                        //  console.log(res)
-                                        if (res.success) {
-                                            const solution = res.solution
-                                            const newSolution = solution.split("\\n")
-                                            this.setState({
-                                                solution: newSolution,
-                                                sickness: res.sickness,
-                                                phoneNumber: res.Department
-                                            })
-                                        } else {
-                                            this.setState({
-                                                msg: res.mgs
-                                            })
-                                        }
-                                    })
-                            }} >
-                            Chọn ảnh
+                        }} >
+                        Chọn ảnh
                         </Text>
+                    <Text
+                        
+                        style={styles.gui}
 
-                   <TouchableOpacity activeOpacity={0.8} onPress={this.sendImage.bind(this)}>
-                    <Text style={styles.gui}> Gửi </Text>
-                    </TouchableOpacity>
+                        onPress={this.sendImage.bind(this)}
+                    > Gửi
+                    </Text>
                     <Overlay isVisible={this.state.modalVisible} onClose={this.onClose} closeOnTouchOutside
                         animationType="zoomIn" containerStyle={{ backgroundColor: 'rgba(37, 8, 10, 0.78)' }}
                         childrenWrapperStyle={{ backgroundColor: '#eee' }}
                         animationDuration={500}>
-
                         <Text onPress={() => {
                             this.setState({
                                 modalVisible: false
                             })
                         }} style={{ color: '#c1c1c1', marginLeft: 'auto', fontSize: 32, marginTop: 0 }} >x</Text>
                         {
-                            this.state.sickness ? <Result info={{ sickeness: this.state.sickness, solution: this.state.solution, phoneNumber: this.state.phoneNumber }} />
-                                : this.state.msg ? <Text style={styles.text}>{this.state.msg}</Text>
-                                    : <Text>Xin chờ trong giây lát...</Text>
+                            this.state.sickness ? <Result info={{sickeness:this.state.sickness, solution: this.state.solution, phoneNumber: this.state.phoneNumber}} /> 
+                            : this.state.msg ? <Text style={styles.text}>{this.state.msg}</Text> 
+                            : <Text>Xin chờ trong giây lát...</Text>
                         }
 
                     </Overlay>
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#BBEEB9',
-
+        
     },
     text: {
         textAlign: 'center'
@@ -205,11 +205,9 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 10,
         textAlign: "center",
-        backgroundColor: '#78f',
-        borderRadius: 10,
-        fontSize: 22,
-        color: '#fff'
-
+        backgroundColor: '#67a',
+        borderRadius: 10
+        
 
     }
 })

@@ -103,12 +103,11 @@ export default class Diagnotics extends React.Component {
 
                 </TouchableOpacity>
                 <View style={{ marginTop: 20, borderRadius: 10, width: 200 }}>
-                   
+                    <TouchableOpacity activeOpacity={0.2}>
                         <Text
 
                             style={styles.gui}
                             onPress={async () => {
-                                
                                 this.setState({
                                     msg: null,
                                     sickness: null,
@@ -164,9 +163,15 @@ export default class Diagnotics extends React.Component {
                             Chọn ảnh
                         </Text>
 
-                   <TouchableOpacity activeOpacity={0.8} onPress={this.sendImage.bind(this)}>
-                    <Text style={styles.gui}> Gửi </Text>
                     </TouchableOpacity>
+                    <Text
+
+                        style={styles.gui}
+
+                        onPress={this.sendImage.bind(this)}
+                    > Gửi
+                    </Text>
+
                     <Overlay isVisible={this.state.modalVisible} onClose={this.onClose} closeOnTouchOutside
                         animationType="zoomIn" containerStyle={{ backgroundColor: 'rgba(37, 8, 10, 0.78)' }}
                         childrenWrapperStyle={{ backgroundColor: '#eee' }}

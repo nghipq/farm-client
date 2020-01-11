@@ -103,70 +103,75 @@ export default class Diagnotics extends React.Component {
 
                 </TouchableOpacity>
                 <View style={{ marginTop: 20, borderRadius: 10, width: 200 }}>
-                   
-                        <Text
+                <TouchableOpacity activeOpacity={0.5}>
+                    <Text
 
-                            style={styles.gui}
-                            onPress={async () => {
-                                
-                                this.setState({
-                                    msg: null,
-                                    sickness: null,
+                        style={styles.gui}
+                        onPress={async () => {
+                            this.setState({
+                                msg: null,
+                                sickness: null,
+                            })
+                            const result = await ImagePicker.launchImageLibraryAsync({
+                                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                                allowsEditing: true,
+                                aspect: [4, 3],
+                                quality: 1
+                            })
+
+                            var name = result.uri.split("ImagePicker/")[1]
+
+                            this.setState({
+                                modalVisible: true
+                            })
+
+                            var item = {
+                                uri: result.uri,
+                                type: 'image/jpeg',
+                                name: name
+                            }
+
+                            var body = new FormData()
+                            body.append('userId', this.state.userId);
+                            body.append('photo', item);
+                            body.append('lng', this.state.lng);
+                            body.append('lat', this.state.lat);
+
+
+                            fetch(`${this.state.link}/diaglogic`, {
+                                method: 'POST',
+                                body: body,
+
+                            }).then(res => res.json())
+                                .then(res => {
+                                    //  console.log(res)
+                                    if (res.success) {
+                                        const solution = res.solution
+                                        const newSolution = solution.split("\\n")
+                                        this.setState({
+                                            solution: newSolution,
+                                            sickness: res.sickness,
+                                            phoneNumber: res.Department
+                                        })
+                                    } else {
+                                        this.setState({
+                                            msg: res.mgs
+                                        })
+                                    }
                                 })
-                                const result = await ImagePicker.launchImageLibraryAsync({
-                                    mediaTypes: ImagePicker.MediaTypeOptions.All,
-                                    allowsEditing: true,
-                                    aspect: [4, 3],
-                                    quality: 1
-                                })
-
-                                var name = result.uri.split("ImagePicker/")[1]
-
-                                this.setState({
-                                    modalVisible: true
-                                })
-
-                                var item = {
-                                    uri: result.uri,
-                                    type: 'image/jpeg',
-                                    name: name
-                                }
-
-                                var body = new FormData()
-                                body.append('userId', this.state.userId);
-                                body.append('photo', item);
-                                body.append('lng', this.state.lng);
-                                body.append('lat', this.state.lat);
-
-
-                                fetch(`${this.state.link}/diaglogic`, {
-                                    method: 'POST',
-                                    body: body,
-
-                                }).then(res => res.json())
-                                    .then(res => {
-                                        //  console.log(res)
-                                        if (res.success) {
-                                            const solution = res.solution
-                                            const newSolution = solution.split("\\n")
-                                            this.setState({
-                                                solution: newSolution,
-                                                sickness: res.sickness,
-                                                phoneNumber: res.Department
-                                            })
-                                        } else {
-                                            this.setState({
-                                                msg: res.mgs
-                                            })
-                                        }
-                                    })
-                            }} >
-                            Chọn ảnh
+                        }} >
+                        Chọn ảnh
                         </Text>
 
-                   <TouchableOpacity activeOpacity={0.8} onPress={this.sendImage.bind(this)}>
-                    <Text style={styles.gui}> Gửi </Text>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
+                    <Text
+
+                        style={styles.gui}
+
+                        onPress={this.sendImage.bind(this)}
+                    > Gửi
+                    </Text>
+
                     <Overlay isVisible={this.state.modalVisible} onClose={this.onClose} closeOnTouchOutside
                         animationType="zoomIn" containerStyle={{ backgroundColor: 'rgba(37, 8, 10, 0.78)' }}
                         childrenWrapperStyle={{ backgroundColor: '#eee' }}
