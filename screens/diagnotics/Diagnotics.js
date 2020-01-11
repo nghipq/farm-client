@@ -16,7 +16,7 @@ export default class Diagnotics extends React.Component {
             lat: null,
             modalVisible: false,
             solution: null,
-            link: 'https://940e1f07.ngrok.io',
+            link: 'https://0750fc64.ngrok.io',
             sickness: null,
             solution: null,
             phoneNumber: null,
@@ -72,11 +72,11 @@ export default class Diagnotics extends React.Component {
                     this.setState({
                         sickness: res.sickness,
                         solution: newSolution,
-                        phoneNumber: res.Department
+                        phoneNumber: res.Department,
                     })
                 } else {
                     this.setState({
-                        msg: res.mgs
+                        msg: res.mgs,
                     })
                 }
             })
@@ -92,7 +92,8 @@ export default class Diagnotics extends React.Component {
                     onPress={() => {
                         this.setState({
                             sickness: null,
-                            msg: null
+                            msg: null,
+                            uri : null
                         })
                         this.props.navigation.navigate('CameraEx')
                     }}>
@@ -112,6 +113,7 @@ export default class Diagnotics extends React.Component {
                         this.setState({
                             msg: null,
                             sickness: null,
+                            uri: null
                         })
                         const result = await ImagePicker.launchImageLibraryAsync({
                             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -123,11 +125,12 @@ export default class Diagnotics extends React.Component {
                         var name = result.uri.split("ImagePicker/")[1]
 
                         this.setState({
-                            modalVisible: true
+                            modalVisible: true,
+                            uri: result.uri
                         })
 
                         var item = {
-                            uri: result.uri,
+                            uri: this.state.uri,
                             type: 'image/jpeg',
                             name: name
                         }
@@ -152,19 +155,23 @@ export default class Diagnotics extends React.Component {
                                     this.setState({
                                         solution: newSolution,
                                         sickness: res.sickness,
-                                        phoneNumber: res.Department
+                                        phoneNumber: res.Department,
                                     })
                                 } else {
                                     this.setState({
-                                        msg: res.mgs
+                                        msg: res.mgs,
                                     })
                                 }
                             })
                     }}>
                         <Text style={styles.gui}>Chọn ảnh</Text>
+                        
+                        
                     </TouchableOpacity>
+                    
                     <TouchableOpacity activeOpacity={0.8} onPress={this.sendImage.bind(this)}>
                         <Text style={styles.gui}> Gửi </Text>
+                        
                     </TouchableOpacity>
                     <Overlay isVisible={this.state.modalVisible} onClose={this.onClose} closeOnTouchOutside
                         animationType="zoomIn" containerStyle={{ backgroundColor: 'rgba(37, 8, 10, 0.78)' }}
@@ -173,16 +180,19 @@ export default class Diagnotics extends React.Component {
 
                         <Text onPress={() => {
                             this.setState({
-                                modalVisible: false
+                                modalVisible: false,
                             })
-                        }} style={{ color: '#c1c1c1', marginLeft: 'auto', fontSize: 32, marginTop: 0 }} >x</Text>
+                        }} style={{ color: '#c1c1c1', marginLeft: 'auto', fontSize: 32, marginTop: 0 }}
+                         >x</Text>
+                          
                         <Image style={{width: 100, height: 100,marginLeft: 115}}
                         source={{uri: this.state.uri}}
                         /> 
+                        
                         {
                             this.state.sickness ? <Result info={{ sickeness: this.state.sickness, solution: this.state.solution, phoneNumber: this.state.phoneNumber }} />
                                 : this.state.msg ? <Text style={styles.text}>{this.state.msg}</Text>
-                                    : <Text>Xin chờ trong giây lát...</Text>
+                                    : <Text style={{textAlign: 'center'}}>Xin chờ trong giây lát...</Text>
                         }
 
                     </Overlay>
@@ -214,4 +224,5 @@ const styles = StyleSheet.create({
 
 
     }
+
 })

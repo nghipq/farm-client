@@ -20,7 +20,7 @@ class WelcomeScreen extends Component {
             password: '',
         };
     }
-    onLogin() {
+     onLogin() {
         const { username, password } = this.state;
         const item = {
             username: username,
@@ -37,6 +37,7 @@ class WelcomeScreen extends Component {
             }
         })
       }
+    
     render() {
         return (
             <View style={styles.container}>
