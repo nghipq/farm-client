@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Button, AsyncStorage, Text, Image } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Button, AsyncStorage, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import CameraEx from './CameraEx';
 import { Overlay } from 'react-native-elements';
@@ -16,12 +16,11 @@ export default class Diagnotics extends React.Component {
             lat: null,
             modalVisible: false,
             solution: null,
-            link: 'https://940e1f07.ngrok.io',
+            link: 'https://2b108f47.ngrok.io',
             sickness: null,
             solution: null,
             phoneNumber: null,
             msg: null,
-            uri: null,
         }
     }
     onClose = () => this.setState({ modalVisible: false });
@@ -45,7 +44,6 @@ export default class Diagnotics extends React.Component {
     sendImage() {
         this.setState({
             modalVisible: true,
-            uri: this.props.navigation.getParam("Imagesrc")
         })
 
         var item = {
@@ -106,9 +104,8 @@ export default class Diagnotics extends React.Component {
                 </TouchableOpacity>
                 <View style={{ marginTop: 20, borderRadius: 10, width: 200 }}>
                     <TouchableOpacity
-                    activeOpacity= {0.8}
                     onPress={async () => {
-                        
+                        activeOpacity= {0.8}
                         this.setState({
                             msg: null,
                             sickness: null,
@@ -176,9 +173,6 @@ export default class Diagnotics extends React.Component {
                                 modalVisible: false
                             })
                         }} style={{ color: '#c1c1c1', marginLeft: 'auto', fontSize: 32, marginTop: 0 }} >x</Text>
-                        <Image style={{width: 100, height: 100,marginLeft: 115}}
-                        source={{uri: this.state.uri}}
-                        /> 
                         {
                             this.state.sickness ? <Result info={{ sickeness: this.state.sickness, solution: this.state.solution, phoneNumber: this.state.phoneNumber }} />
                                 : this.state.msg ? <Text style={styles.text}>{this.state.msg}</Text>
